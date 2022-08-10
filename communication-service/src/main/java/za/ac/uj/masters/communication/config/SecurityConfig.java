@@ -5,28 +5,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.SecurityFilterChain;
-
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig /*extends WebSecurityConfigurerAdapter*/ {
-
-    /*@Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-                .cors().and().authorizeRequests().antMatchers("/actuator/**", "/health/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
-                .and()
-                .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/sms/**", "/email/**")
-                .hasAuthority("SCOPE_write")
-                .anyRequest()
-                .authenticated()
-                .and()
-                .oauth2ResourceServer()
-                .jwt();
-    }*/
+public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -42,7 +25,8 @@ public class SecurityConfig /*extends WebSecurityConfigurerAdapter*/ {
                 .cors()
                 .and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/sms/**", "/email/**")
+                .antMatchers(HttpMethod.POST,
+                        "/sms/**", "/email/**")
                 .hasAuthority("SCOPE_write")
                 .anyRequest()
                 .authenticated()
