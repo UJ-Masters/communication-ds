@@ -1,10 +1,10 @@
 package za.ac.uj.masters.communication.service;
 
-import com.masters.uj.communication.model.SendRequest;
-import com.masters.uj.communication.model.SmsResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import za.ac.uj.masters.communication.model.SendRequest;
+import za.ac.uj.masters.communication.model.SmsResponse;
 
 @Component
 public class SmsService {

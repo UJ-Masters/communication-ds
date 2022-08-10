@@ -1,10 +1,10 @@
-package com.masters.uj.communication.service;
+package za.ac.uj.masters.communication.service;
 
-import com.masters.uj.communication.model.EmailResponse;
-import com.masters.uj.communication.model.SendRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import za.ac.uj.masters.communication.model.EmailResponse;
+import za.ac.uj.masters.communication.model.SendRequest;
 
 @Component
 public class EmailService {

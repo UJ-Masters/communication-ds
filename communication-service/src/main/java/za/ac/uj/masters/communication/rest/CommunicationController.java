@@ -1,12 +1,12 @@
 package za.ac.uj.masters.communication.rest;
 
-import com.masters.uj.communication.model.EmailResponse;
-import com.masters.uj.communication.model.SendRequest;
-import com.masters.uj.communication.model.SmsResponse;
-import com.masters.uj.communication.service.EmailService;
-import com.masters.uj.communication.service.SmsService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import za.ac.uj.masters.communication.model.EmailResponse;
+import za.ac.uj.masters.communication.model.SendRequest;
+import za.ac.uj.masters.communication.model.SmsResponse;
+import za.ac.uj.masters.communication.service.EmailService;
+import za.ac.uj.masters.communication.service.SmsService;
 
 @RestController
 @CrossOrigin("*")
