@@ -22,7 +22,7 @@ public class CommunicationApplication {
         return (evt) -> {
             Integer port = serverProperties.getPort();
 
-            logger.info("OTP-DS started: http://localhost:{}/otp/swagger-ui.html to use otp-ds", port);
+            logger.info("Communication-DS started: http://localhost:{}/otp/swagger-ui.html to use Communication-ds", port);
         };
     }
 }
