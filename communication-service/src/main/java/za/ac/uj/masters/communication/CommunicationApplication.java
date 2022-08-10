@@ -14,7 +14,7 @@ public class CommunicationApplication {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public static void main(String[] args) {
-        SpringApplication.run(OtpApplication.class, args);
+        SpringApplication.run(CommunicationApplication.class, args);
     }
 
     @Bean
