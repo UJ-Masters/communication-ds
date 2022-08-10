@@ -1,7 +1,7 @@
 package za.ac.uj.masters.communication.mapper;
 
-import com.masters.uj.communication.model.SmsResponse;
 import org.springframework.stereotype.Component;
+import za.ac.uj.masters.communication.model.SmsResponse;
 
 @Component
 public class ResponseMapper {
