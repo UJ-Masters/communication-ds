@@ -1,6 +1,5 @@
 package za.ac.uj.masters.communication.model;
 
-
 public enum DeliveryType {
     E("E"), S("S");
 
