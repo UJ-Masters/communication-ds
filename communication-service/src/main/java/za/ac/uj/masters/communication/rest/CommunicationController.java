@@ -36,14 +36,14 @@ public class CommunicationController {
     public EmailResponse sendEmail(@RequestBody SendRequest request) throws ExecutionException, InterruptedException {
         ExecutorService threadPool = Executors.newCachedThreadPool();
         try{
-            Future<EmailResponse> futureTask = threadPool.submit(() -> new EmailResponse(false));
+            Future<EmailResponse> futureTask = threadPool.submit(() -> emailService.sendEmail(request));
 
             while (!futureTask.isDone()) {
                 System.out.println("FutureTask is not finished yet...");
             }
             EmailResponse result = futureTask.get();
 
-            return emailService.sendEmail(request);
+            return result;
 
         }catch (Exception exception){
             logger.info(exception.getMessage());
@@ -59,14 +59,14 @@ public class CommunicationController {
     public SmsResponse sendSms(@RequestBody SendRequest request) throws ExecutionException, InterruptedException {
         ExecutorService threadPool = Executors.newCachedThreadPool();
         try{
-            Future<SmsResponse> futureTask = threadPool.submit(() -> new SmsResponse(false));
+            Future<SmsResponse> futureTask = threadPool.submit(() -> smsService.sendSms(request));
 
             while (!futureTask.isDone()) {
                 System.out.println("FutureTask is not finished yet...");
             }
             SmsResponse result = futureTask.get();
 
-            return smsService.sendSms(request);
+            return result;
 
         }catch (Exception exception){
             logger.info(exception.getMessage());
