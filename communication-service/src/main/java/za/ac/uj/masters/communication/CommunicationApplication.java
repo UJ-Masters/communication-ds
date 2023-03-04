@@ -19,13 +19,7 @@ public class CommunicationApplication {
 
     @Bean
     ApplicationListener<ApplicationReadyEvent> onApplicationReadyEventListener(ServerProperties serverProperties) {
-        return (evt) -> {
-
-            Integer port = serverProperties.getPort();
-
-            String contextPath = "communication";
-
-            logger.info("Communication-DS started: http://localhost:{}/{}/swagger-ui.html to use Communication-ds", port, contextPath);
-        };
+        return evt -> logger.info("Communication-DS started: http://localhost:{}/{}/swagger-ui.html to use Communication-ds",
+                        serverProperties.getPort(), serverProperties.getServlet().getContextPath());
     }
 }

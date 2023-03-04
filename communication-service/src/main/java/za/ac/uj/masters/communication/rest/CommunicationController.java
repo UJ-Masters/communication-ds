@@ -35,43 +35,39 @@ public class CommunicationController {
     @ResponseBody
     public EmailResponse sendEmail(@RequestBody SendRequest request) throws ExecutionException, InterruptedException {
         ExecutorService threadPool = Executors.newCachedThreadPool();
-        try{
+        try {
             Future<EmailResponse> futureTask = threadPool.submit(() -> emailService.sendEmail(request));
 
             while (!futureTask.isDone()) {
-                System.out.println("FutureTask is not finished yet...");
+                logger.error("FutureTask is not finished yet...");
             }
-            EmailResponse result = futureTask.get();
 
-            return result;
+            return futureTask.get();
 
-        }catch (Exception exception){
+        } catch (Exception exception) {
             logger.info(exception.getMessage());
             throw exception;
-        }finally {
+        } finally {
             threadPool.shutdown();
         }
-
     }
 
     @PostMapping("/sms")
     @ResponseBody
     public SmsResponse sendSms(@RequestBody SendRequest request) throws ExecutionException, InterruptedException {
         ExecutorService threadPool = Executors.newCachedThreadPool();
-        try{
+        try {
             Future<SmsResponse> futureTask = threadPool.submit(() -> smsService.sendSms(request));
 
             while (!futureTask.isDone()) {
-                System.out.println("FutureTask is not finished yet...");
+                logger.error("FutureTask is not finished yet...");
             }
-            SmsResponse result = futureTask.get();
+            return futureTask.get();
 
-            return result;
-
-        }catch (Exception exception){
+        } catch (Exception exception) {
             logger.info(exception.getMessage());
             throw exception;
-        }finally {
+        } finally {
             threadPool.shutdown();
         }
     }
