@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import za.ac.uj.masters.communication.exception.SomethingWentWrongException;
 import za.ac.uj.masters.communication.model.EmailResponse;
 import za.ac.uj.masters.communication.model.SendRequest;
 import za.ac.uj.masters.communication.model.SmsResponse;
@@ -33,41 +34,36 @@ public class CommunicationController {
 
     @PostMapping("/email")
     @ResponseBody
-    public EmailResponse sendEmail(@RequestBody SendRequest request) throws ExecutionException, InterruptedException {
+    public EmailResponse sendEmail(@RequestBody SendRequest request) {
         ExecutorService threadPool = Executors.newCachedThreadPool();
         try {
-            Future<EmailResponse> futureTask = threadPool.submit(() -> emailService.sendEmail(request));
-
-            while (!futureTask.isDone()) {
-                logger.error("FutureTask is not finished yet...");
+            Future<EmailResponse> emailTask = threadPool.submit(() -> emailService.sendEmail(request));
+            if(!emailTask.isDone()){
+                logger.info("sms task not done");
             }
-
-            return futureTask.get();
-
-        } catch (Exception exception) {
-            logger.info(exception.getMessage());
-            throw exception;
-        } finally {
+            return emailTask.get();
+        } catch (ExecutionException | InterruptedException e) {
+            logger.error(e.getMessage());
+        }  finally {
             threadPool.shutdown();
         }
+        return null;
     }
 
     @PostMapping("/sms")
     @ResponseBody
-    public SmsResponse sendSms(@RequestBody SendRequest request) throws ExecutionException, InterruptedException {
+    public SmsResponse sendSms(@RequestBody SendRequest request) {
         ExecutorService threadPool = Executors.newCachedThreadPool();
         try {
-            Future<SmsResponse> futureTask = threadPool.submit(() -> smsService.sendSms(request));
-
-            while (!futureTask.isDone()) {
-                logger.error("FutureTask is not finished yet...");
+            Future<SmsResponse> smsTask = threadPool.submit(() -> smsService.sendSms(request));
+            if(!smsTask.isDone()){
+                logger.info("sms task not done");
             }
-            return futureTask.get();
-
-        } catch (Exception exception) {
-            logger.info(exception.getMessage());
-            throw exception;
-        } finally {
+            return smsTask.get();
+        } catch (ExecutionException | InterruptedException e) {
+            logger.error(e.getMessage());
+            throw new SomethingWentWrongException(e.getMessage());
+        }  finally {
             threadPool.shutdown();
         }
     }
