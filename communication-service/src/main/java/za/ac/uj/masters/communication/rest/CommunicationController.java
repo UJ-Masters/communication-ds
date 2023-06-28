@@ -35,36 +35,12 @@ public class CommunicationController {
     @PostMapping("/email")
     @ResponseBody
     public EmailResponse sendEmail(@RequestBody SendRequest request) {
-        ExecutorService threadPool = Executors.newCachedThreadPool();
-        try {
-            Future<EmailResponse> emailTask = threadPool.submit(() -> emailService.sendEmail(request));
-            if(!emailTask.isDone()){
-                logger.info("sms task not done");
-            }
-            return emailTask.get();
-        } catch (ExecutionException | InterruptedException e) {
-            logger.error(e.getMessage());
-        }  finally {
-            threadPool.shutdown();
-        }
-        return null;
+        return emailService.sendEmail(request);
     }
 
     @PostMapping("/sms")
     @ResponseBody
     public SmsResponse sendSms(@RequestBody SendRequest request) {
-        ExecutorService threadPool = Executors.newCachedThreadPool();
-        try {
-            Future<SmsResponse> smsTask = threadPool.submit(() -> smsService.sendSms(request));
-            if(!smsTask.isDone()){
-                logger.info("sms task not done");
-            }
-            return smsTask.get();
-        } catch (ExecutionException | InterruptedException e) {
-            logger.error(e.getMessage());
-            throw new SomethingWentWrongException(e.getMessage());
-        }  finally {
-            threadPool.shutdown();
-        }
+        return smsService.sendSms(request);
     }
 }
